@@ -274,6 +274,8 @@ ${keyConcepts}
 
 📖 CHAPTER SUMMARY
 
-${chapterSummary}`
+${chapterSummary}`,
+
+  flashcards: flashcards
 });
 }

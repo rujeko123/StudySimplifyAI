@@ -5,6 +5,8 @@ import { useState } from "react";
 export default function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [result, setResult] = useState("");
+  const [flashcards, setFlashcards] = useState("");
+  const [activeCard, setActiveCard] = useState<number | null>(null);
 
   function handleFile(file: File) {
     setSelectedFile(file);
@@ -24,11 +26,12 @@ export default function UploadPage() {
       body: formData,
     });
 
-    const data = await response.json();
+   const data = await response.json();
 
-    console.log(data);
+console.log(data);
 
-    setResult(data.summary);
+setResult(data.summary);
+setFlashcards(data.flashcards);
   }
 
   return (
@@ -100,11 +103,55 @@ export default function UploadPage() {
               📚 Study Results
             </h2>
 
-            <div className="whitespace-pre-wrap text-gray-700">
-              {result}
-            </div>
+   <div className="whitespace-pre-wrap text-gray-700">
+  {result}
+</div> 
           </div>
         )}
+      {flashcards && (
+  <div className="mt-8 bg-blue-50 border rounded-xl p-6 shadow">
+
+    <h2 className="text-2xl font-bold text-blue-600 mb-4">
+      🧠 Interactive Flashcards
+    </h2>
+
+    <div className="space-y-4">
+
+  {flashcards
+    .split("=================================")
+    .filter(card => card.trim() !== "")
+    .map((card, index) => (
+
+      <div
+        key={index}
+        onClick={() =>
+          setActiveCard(activeCard === index ? null : index)
+        }
+        className="cursor-pointer bg-white border rounded-xl p-6 shadow hover:shadow-lg transition"
+      >
+
+        {activeCard === index ? (
+          <div className="whitespace-pre-wrap text-gray-700">
+            {card}
+          </div>
+        ) : (
+          <h3 className="text-xl font-bold text-blue-600">
+            🧠 Flashcard {index + 1}
+            <br />
+            <span className="text-gray-500 text-base">
+              Click to reveal answer
+            </span>
+          </h3>
+        )}
+
+      </div>
+
+    ))}
+
+</div>
+
+  </div>
+)}  
 
       </div>
     </main>
