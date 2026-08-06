@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PDFParse } from "pdf-parse";
 import mammoth from "mammoth";
+import { generateAIStudyNotes } from "@/lib/ai";
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
 
@@ -13,7 +13,6 @@ if (!(file instanceof File)) {
 }
 
 const buffer = Buffer.from(await file.arrayBuffer());
-
 let extractedText = "";
 const fileName = file.name.toLowerCase();
 
@@ -100,6 +99,14 @@ Key Point:
 This concept is important because it helps students understand the topic better.`;
   })
   .join("\n\n=================================\n\n");
+ let aiStudyNotes = "";
+
+try {
+  aiStudyNotes = await generateAIStudyNotes(extractedText);
+} catch (error) {
+  console.log("Using built-in notes generator");
+  aiStudyNotes = studyNotes;
+}
 const quizQuestions = paragraphs
   .map((paragraph, index) => {
 
@@ -254,7 +261,7 @@ ${file.name}
 
 📝 Key Notes
 
-${studyNotes}
+${aiStudyNotes}
 
 =================================
 
