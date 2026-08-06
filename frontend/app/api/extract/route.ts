@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as pdf from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 import mammoth from "mammoth";
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
@@ -26,7 +26,7 @@ if (fileName.endsWith(".docx")) {
 } else {
   return NextResponse.json(
     {
-      error: "Unsupported file type.",
+      error: "Currently only Word (.docx) files are supported.",
     },
     {
       status: 400,
