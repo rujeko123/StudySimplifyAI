@@ -38,4 +38,24 @@ Include:
 
     throw error;
 }
+
 }
+export function explainTopic(question: string) {
+
+  const lower = question.toLowerCase();
+
+  if (lower.includes("critical consciousness")) {
+    return "Critical Consciousness means being able to think deeply about society, identify problems, and understand how people can create positive change.";
+  }
+
+  if (lower.includes("zss")) {
+    return "ZSS teaches students about Zimbabwe's history, culture, citizenship, national values and their responsibilities as citizens.";
+  }
+
+  if (lower.includes("civic education")) {
+    return "Civic Education teaches people about their rights, responsibilities, values and participation in society.";
+  }
+
+  return `This topic is explained as follows: ${question}. It is an important concept from your study notes.`;
+}
+

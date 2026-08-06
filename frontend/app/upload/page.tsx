@@ -10,6 +10,8 @@ export default function UploadPage() {
   const [flashcards, setFlashcards] = useState("");
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [simpleExplanation, setSimpleExplanation] = useState("");
+  const [question, setQuestion] = useState("");
+const [answer, setAnswer] = useState("");
 
   function handleFile(file: File) {
     setSelectedFile(file);
@@ -66,7 +68,26 @@ setFlashcards(data.flashcards);
  function explainConcept(concept: string) {
   setSimpleExplanation(getSimpleExplanation(concept));
 }
+async function askTutor() {
+  if (!question.trim()) {
+    alert("Please enter a question.");
+    return;
+  }
 
+  const response = await fetch("/api/explain", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      question,
+    }),
+  });
+
+  const data = await response.json();
+
+  setAnswer(data.answer);
+}
   return (
     <main className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl">
@@ -178,6 +199,38 @@ setFlashcards(data.flashcards);
     <p>{simpleExplanation}</p>
   </div>
 )}
+<div className="mt-8 border-t pt-6">
+
+  <h3 className="text-2xl font-bold text-purple-700 mb-4">
+    🤖 Ask AI Tutor
+  </h3>
+
+  <input
+    type="text"
+    value={question}
+    onChange={(e) => setQuestion(e.target.value)}
+    placeholder="Ask a question about your notes..."
+    className="w-full border rounded-xl p-3"
+  />
+
+  <button
+    onClick={askTutor}
+    className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl"
+  >
+    Ask AI Tutor
+  </button>
+
+  {answer && (
+    <div className="mt-6 bg-purple-50 border border-purple-200 rounded-xl p-5">
+      <h4 className="text-xl font-bold text-purple-700 mb-2">
+        💬 Answer
+      </h4>
+
+      <p>{answer}</p>
+    </div>
+  )}
+
+</div>
           </div>
         )}
       {flashcards && (
