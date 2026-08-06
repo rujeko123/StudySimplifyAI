@@ -56,8 +56,50 @@ const paragraphs = preview
   .slice(0, 5);
 
 const studyNotes = paragraphs
-  .map((paragraph, index) => `${index + 1}. ${paragraph}`)
-  .join("\n\n");
+  .map((paragraph, index) => {
+
+    let concept = "";
+
+    if (
+  paragraph.toLowerCase().includes("zss can be defined") ||
+  paragraph.toLowerCase().includes("civic or citizenship education")
+) {
+  concept = "ZSS Definition";
+}
+else if (paragraph.toLowerCase().includes("purpose")) {
+  concept = "Purpose of ZSS";
+}
+else if (paragraph.toLowerCase().includes("aim")) {
+  concept = "Major Aims of ZSS";
+}
+else if (paragraph.toLowerCase().includes("rationale")) {
+  concept = "Rationale Behind ZSS";
+}
+    else if (paragraph.toLowerCase().includes("civic education")) {
+      concept = "Civic Education";
+    } 
+    else if (paragraph.toLowerCase().includes("critical consciousness")) {
+      concept = "Critical Consciousness";
+    } 
+    else if (paragraph.toLowerCase().includes("patriot")) {
+      concept = "Patriotism";
+    } 
+    else {
+      concept = paragraph
+        .split(" ")
+        .slice(0, 5)
+        .join(" ");
+    }
+
+    return `${index + 1}. ${concept}
+
+Explanation:
+${paragraph}
+
+Key Point:
+This concept is important because it helps students understand the topic better.`;
+  })
+  .join("\n\n=================================\n\n");
  const quizQuestions = paragraphs
   .map((paragraph, index) => {
     let topic = paragraph
