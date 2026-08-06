@@ -90,13 +90,16 @@ else if (paragraph.toLowerCase().includes("rationale")) {
         .join(" ");
     }
 
-    return `${index + 1}. ${concept}
+ return `${index + 1}. ${concept}
 
-Explanation:
+Simple Explanation:
 ${paragraph}
 
-Key Point:
-This concept is important because it helps students understand the topic better.`;
+Why It Matters:
+Understanding ${concept} helps students develop knowledge, awareness, and the ability to apply this concept in real life.
+
+Remember:
+${concept} is one of the important ideas covered in this topic.`;   
   })
   .join("\n\n=================================\n\n");
  let aiStudyNotes = "";
@@ -186,10 +189,17 @@ ${paragraph}`;
   .join("\n\n=================================\n\n");
  const chapterSummary =
   paragraphs.length > 0
-    ? `This chapter explains the key ideas covered in the topic. It focuses on ${paragraphs
+    ? `This topic introduces students to important ideas about Zimbabwe Studies. 
+It explains ${paragraphs
         .slice(0, 3)
-        .map((paragraph) => paragraph.toLowerCase().replace(/\.$/, ""))
-        .join(", ")}. The chapter helps students understand important concepts, develop critical awareness, and apply their knowledge in real-life situations.`
+        .map((paragraph) =>
+          paragraph
+            .toLowerCase()
+            .replace(/\.$/, "")
+        )
+        .join(", ")}.
+
+Students learn how these concepts relate to citizenship, national development, and their responsibilities in society.`
     : "No chapter summary available.";
   const keyConcepts = paragraphs
   .map((paragraph, index) => {
