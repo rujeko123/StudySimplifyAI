@@ -100,21 +100,37 @@ Key Point:
 This concept is important because it helps students understand the topic better.`;
   })
   .join("\n\n=================================\n\n");
- const quizQuestions = paragraphs
+const quizQuestions = paragraphs
   .map((paragraph, index) => {
-    let topic = paragraph
-      .replace(/^(explain|define|list|describe|discuss|state|outline)\s+/i, "")
-      .replace(/:$/, "")
-      .trim();
 
-    const questionTypes = [
-      `Define ${topic}.`,
-      `Explain the importance of ${topic}.`,
-      `Discuss ${topic}.`,
-      `What is the significance of ${topic}?`
-    ];
+    const lower = paragraph.toLowerCase();
 
-    return `${index + 1}. ${questionTypes[index % questionTypes.length]}`;
+    let question = "";
+
+    if (lower.includes("purpose")) {
+      question = "Explain the purpose/rationale of ZSS.";
+    }
+    else if (lower.includes("aim")) {
+      question = "Explain the major aims of ZSS.";
+    }
+    else if (lower.includes("rationale")) {
+      question = "Why was the ZSS module introduced to university students?";
+    }
+    else if (
+      lower.includes("zss can be defined") ||
+      lower.includes("civic or citizenship education")
+    ) {
+      question = "What is ZSS and how does it contribute to civic education?";
+    }
+    else if (lower.includes("civic education")) {
+      question = "Explain the importance of civic education.";
+    }
+    else {
+      question = `Explain ${paragraph}.`;
+    }
+
+    return `${index + 1}. ${question}`;
+
   })
   .join("\n\n");
 
@@ -161,32 +177,47 @@ BACK:
 ${paragraph}`;
   })
   .join("\n\n=================================\n\n");
-  const chapterSummary =
+ const chapterSummary =
   paragraphs.length > 0
-    ? `This chapter introduces ${file.name.replace(".docx", "")}. It explains ${paragraphs
+    ? `This chapter explains the key ideas covered in the topic. It focuses on ${paragraphs
         .slice(0, 3)
         .map((paragraph) => paragraph.toLowerCase().replace(/\.$/, ""))
-        .join(", ")}. The chapter concludes by highlighting the importance of these concepts for students.`
+        .join(", ")}. The chapter helps students understand important concepts, develop critical awareness, and apply their knowledge in real-life situations.`
     : "No chapter summary available.";
   const keyConcepts = paragraphs
   .map((paragraph, index) => {
 
     let concept = "";
 
-    if (paragraph.toLowerCase().includes("zss")) {
-      concept = "ZSS";
-    } else if (paragraph.toLowerCase().includes("civic education")) {
-      concept = "Civic Education";
-    } else if (paragraph.toLowerCase().includes("critical consciousness")) {
-      concept = "Critical Consciousness";
-    } else if (paragraph.toLowerCase().includes("patriot")) {
-      concept = "Patriotism";
-    } else {
-      concept = paragraph
-        .split(" ")
-        .slice(0, 4)
-        .join(" ");
-    }
+    const lower = paragraph.toLowerCase();
+
+if (lower.includes("purpose")) {
+  concept = "Purpose of ZSS";
+}
+else if (lower.includes("aim")) {
+  concept = "Major Aims of ZSS";
+}
+else if (lower.includes("rationale")) {
+  concept = "Rationale Behind ZSS";
+}
+else if (
+  lower.includes("zss can be defined") ||
+  lower.includes("civic or citizenship education")
+) {
+  concept = "ZSS Definition";
+}
+else if (lower.includes("civic education")) {
+  concept = "Civic Education";
+}
+else if (lower.includes("patriot")) {
+  concept = "Patriotism";
+}
+else {
+  concept = paragraph
+    .split(" ")
+    .slice(0, 4)
+    .join(" ");
+}
 
     return `${index + 1}. ${concept}
 
