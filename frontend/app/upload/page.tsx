@@ -127,21 +127,51 @@ setFlashcards(data.flashcards);
         onClick={() =>
           setActiveCard(activeCard === index ? null : index)
         }
-        className="cursor-pointer bg-white border rounded-xl p-6 shadow hover:shadow-lg transition"
+       className="cursor-pointer bg-white border rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
       >
 
-        {activeCard === index ? (
-          <div className="whitespace-pre-wrap text-gray-700">
-            {card}
-          </div>
-        ) : (
-          <h3 className="text-xl font-bold text-blue-600">
-            🧠 Flashcard {index + 1}
-            <br />
-            <span className="text-gray-500 text-base">
-              Click to reveal answer
-            </span>
-          </h3>
+       {activeCard === index ? (
+  <div className="text-gray-700">
+
+    <h4 className="text-lg font-bold text-blue-600 mb-2">
+      ❓ Question
+    </h4>
+
+    <p className="mb-6">
+      {card
+        .split("BACK:")[0]
+        .replace("FRONT:", "")
+        .trim()}
+    </p>
+
+
+    <h4 className="text-lg font-bold text-green-600 mb-2">
+      ✅ Answer
+    </h4>
+
+    <p>
+      {card
+        .split("BACK:")[1]
+        ?.trim()}
+    </p>
+
+  </div>
+) : (
+          <div className="text-center">
+
+  <div className="text-4xl mb-3">
+    🧠
+  </div>
+
+  <h3 className="text-2xl font-bold text-blue-600">
+    Flashcard {index + 1}
+  </h3>
+
+  <p className="text-gray-500 mt-3">
+    Click to reveal answer
+  </p>
+
+</div>
         )}
 
       </div>
