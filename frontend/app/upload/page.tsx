@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import jsPDF from "jspdf";
 import { getSimpleExplanation } from "@/lib/explanations";
 
 export default function UploadPage() {
@@ -13,6 +14,19 @@ export default function UploadPage() {
   function handleFile(file: File) {
     setSelectedFile(file);
   }
+  function downloadNotes() {
+  const doc = new jsPDF();
+
+  const content = result;
+
+  doc.setFontSize(12);
+
+  const lines = doc.splitTextToSize(content, 180);
+
+  doc.text(lines, 10, 20);
+
+  doc.save("StudySimplifyAI-Notes.pdf");
+}
 
   async function handleSummarize() {
     if (!selectedFile) {
@@ -112,6 +126,12 @@ setFlashcards(data.flashcards);
    <div className="whitespace-pre-wrap text-gray-700">
   {result}
 </div> 
+<button
+  onClick={downloadNotes}
+  className="mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold"
+>
+  ⬇️ Download Study Notes
+</button>
 <div className="mt-6 flex flex-wrap gap-3">
 
   <button
