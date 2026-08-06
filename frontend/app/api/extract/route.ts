@@ -180,11 +180,14 @@ const flashcards = paragraphs
 
     return `📇 FLASHCARD ${index + 1}
 
-FRONT:
-What is ${concept}?
+QUESTION:
+Define ${concept}.
 
-BACK:
-${paragraph}`;
+ANSWER:
+${paragraph}
+
+EXAM TIP:
+Remember the main ideas related to ${concept} when answering questions about this topic.`;
   })
   .join("\n\n=================================\n\n");
  const chapterSummary =
