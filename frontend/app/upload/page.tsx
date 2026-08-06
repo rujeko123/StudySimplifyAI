@@ -7,6 +7,7 @@ export default function UploadPage() {
   const [result, setResult] = useState("");
   const [flashcards, setFlashcards] = useState("");
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [simpleExplanation, setSimpleExplanation] = useState("");
 
   function handleFile(file: File) {
     setSelectedFile(file);
@@ -34,6 +35,31 @@ setResult(data.summary);
 setFlashcards(data.flashcards);
   }
 
+ function explainConcept(concept: string) {
+  let explanation = "";
+
+  switch (concept) {
+    case "ZSS":
+      explanation =
+        "The ZSS module teaches students about Zimbabwe's history, culture, citizenship, and national development so they can become responsible citizens.";
+      break;
+
+    case "Civic Education":
+      explanation =
+        "Civic Education helps people understand their rights, responsibilities, and how they can contribute positively to society.";
+      break;
+
+    case "Critical Consciousness":
+      explanation =
+        "Critical Consciousness is the ability to think deeply about society, identify problems, and work towards positive change.";
+      break;
+
+    default:
+      explanation = `${concept} is an important topic in your notes.`;
+  }
+
+  setSimpleExplanation(explanation);
+} 
   return (
     <main className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl">
@@ -106,6 +132,21 @@ setFlashcards(data.flashcards);
    <div className="whitespace-pre-wrap text-gray-700">
   {result}
 </div> 
+<button
+  onClick={() => explainConcept("ZSS")}
+  className="mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold"
+>
+  💡 Explain ZSS Simply
+</button>
+{simpleExplanation && (
+  <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-5">
+    <h3 className="text-xl font-bold text-green-700 mb-2">
+      💡 Simple Explanation
+    </h3>
+
+    <p>{simpleExplanation}</p>
+  </div>
+)}
           </div>
         )}
       {flashcards && (
