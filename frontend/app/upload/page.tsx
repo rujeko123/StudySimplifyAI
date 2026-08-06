@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { getSimpleExplanation } from "@/lib/explanations";
 
 export default function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -36,38 +37,9 @@ setFlashcards(data.flashcards);
   }
 
  function explainConcept(concept: string) {
-  let explanation = "";
+  setSimpleExplanation(getSimpleExplanation(concept));
+}
 
-  switch (concept) {
-    case "ZSS":
-      explanation =
-        "The ZSS module teaches students about Zimbabwe's history, culture, citizenship, and national development so they can become responsible citizens.";
-      break;
-
-    case "Civic Education":
-      explanation =
-        "Civic Education helps people understand their rights, responsibilities, and how they can contribute positively to society.";
-      break;
-
-    case "Critical Consciousness":
-      explanation =
-        "Critical Consciousness is the ability to think deeply about society, identify problems, and work towards positive change.";
-      break;
-case "Purpose of ZSS":
-  explanation =
-    "The purpose of the ZSS module is to help students understand Zimbabwe, appreciate national values, and become responsible citizens.";
-  break;
-
-case "Major Aims of ZSS":
-  explanation =
-    "The major aims of ZSS are to develop patriotism, critical thinking, civic responsibility, and knowledge of Zimbabwe's history and culture.";
-  break;
-    default:
-      explanation = `${concept} is an important topic in your notes.`;
-  }
-
-  setSimpleExplanation(explanation);
-} 
   return (
     <main className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl">
