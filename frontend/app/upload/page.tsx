@@ -53,7 +53,15 @@ setFlashcards(data.flashcards);
       explanation =
         "Critical Consciousness is the ability to think deeply about society, identify problems, and work towards positive change.";
       break;
+case "Purpose of ZSS":
+  explanation =
+    "The purpose of the ZSS module is to help students understand Zimbabwe, appreciate national values, and become responsible citizens.";
+  break;
 
+case "Major Aims of ZSS":
+  explanation =
+    "The major aims of ZSS are to develop patriotism, critical thinking, civic responsibility, and knowledge of Zimbabwe's history and culture.";
+  break;
     default:
       explanation = `${concept} is an important topic in your notes.`;
   }
@@ -132,12 +140,30 @@ setFlashcards(data.flashcards);
    <div className="whitespace-pre-wrap text-gray-700">
   {result}
 </div> 
-<button
-  onClick={() => explainConcept("ZSS")}
-  className="mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold"
->
-  💡 Explain ZSS Simply
-</button>
+<div className="mt-6 flex flex-wrap gap-3">
+
+  <button
+    onClick={() => explainConcept("Purpose of ZSS")}
+    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+  >
+    💡 Purpose of ZSS
+  </button>
+
+  <button
+    onClick={() => explainConcept("Major Aims of ZSS")}
+    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+  >
+    💡 Major Aims
+  </button>
+
+  <button
+    onClick={() => explainConcept("Civic Education")}
+    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+  >
+    💡 Civic Education
+  </button>
+
+</div>
 {simpleExplanation && (
   <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-5">
     <h3 className="text-xl font-bold text-green-700 mb-2">
