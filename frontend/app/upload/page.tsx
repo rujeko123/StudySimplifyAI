@@ -14,16 +14,29 @@ export default function UploadPage() {
   function handleFile(file: File) {
     setSelectedFile(file);
   }
-  function downloadNotes() {
+ function downloadNotes() {
   const doc = new jsPDF();
 
-  const content = result;
+  const cleanContent = result.replace(
+    /[^\x00-\x7F]/g,
+    ""
+  );
 
   doc.setFontSize(12);
 
-  const lines = doc.splitTextToSize(content, 180);
+  const lines = doc.splitTextToSize(cleanContent, 180);
 
-  doc.text(lines, 10, 20);
+  let y = 20;
+
+  lines.forEach((line: string) => {
+    if (y > 280) {
+      doc.addPage();
+      y = 20;
+    }
+
+    doc.text(line, 10, y);
+    y += 7;
+  });
 
   doc.save("StudySimplifyAI-Notes.pdf");
 }
