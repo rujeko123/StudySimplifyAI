@@ -231,6 +231,16 @@ console.log(preview);
 
 console.log("Study Notes:");
 console.log(studyNotes);
+const explanations = {
+  "Purpose of ZSS":
+    "The purpose of the ZSS module is to help students understand Zimbabwe, appreciate national values, and become responsible citizens.",
+
+  "Major Aims of ZSS":
+    "The major aims of ZSS are to develop patriotism, critical thinking, civic responsibility, and knowledge of Zimbabwe's history and culture.",
+
+  "Civic Education":
+    "Civic Education helps people understand their rights, responsibilities, and how they can contribute positively to society."
+};
 return NextResponse.json({
   summary: `📚 STUDY NOTES
 
@@ -270,12 +280,14 @@ ${flashcards}
 ⭐ KEY CONCEPTS
 
 ${keyConcepts}
+
 =================================
 
 📖 CHAPTER SUMMARY
 
 ${chapterSummary}`,
 
-  flashcards: flashcards
+  flashcards: flashcards,
+  explanations
 });
 }
