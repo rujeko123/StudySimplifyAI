@@ -10,6 +10,11 @@ export default function UploadPage() {
   const [flashcards, setFlashcards] = useState("");
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [simpleExplanation, setSimpleExplanation] = useState("");
+  const [wordCount, setWordCount] = useState(0);
+ const [readingTime, setReadingTime] = useState(0); 
+ const [paragraphCount, setParagraphCount] = useState(0);
+ const [characterCount, setCharacterCount] = useState(0);
+
   const [question, setQuestion] = useState("");
 const [answer, setAnswer] = useState("");
 
@@ -63,6 +68,18 @@ console.log(data);
 
 setResult(data.summary);
 setFlashcards(data.flashcards);
+setWordCount(
+  data.summary.split(/\s+/).filter(Boolean).length
+);
+setReadingTime(
+  Math.ceil(
+    data.summary.split(/\s+/).filter(Boolean).length / 200
+  )
+);
+setParagraphCount(
+  data.summary.split(/\n+/).filter(Boolean).length
+);
+setCharacterCount(data.summary.length);
   }
 
  function explainConcept(concept: string) {
@@ -156,6 +173,25 @@ async function askTutor() {
             <h2 className="text-2xl font-bold text-blue-600 mb-4">
               📚 Study Results
             </h2>
+         <div className="mb-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
+  <h3 className="font-bold text-blue-700">
+    📊 Study Statistics
+  </h3>
+
+  <p className="mt-2 text-gray-700">
+    📝 Words in your notes: {wordCount}
+  </p>
+
+  <p className="mt-2 text-gray-700">
+    ⏱️ Estimated reading time: {readingTime} minutes
+  </p>
+  <p className="mt-2 text-gray-700">
+  📄 Paragraphs: {paragraphCount}
+</p>
+<p className="mt-2 text-gray-700">
+  🔤 Characters: {characterCount}
+</p>
+</div>
 
    <div className="whitespace-pre-wrap text-gray-700">
   {result}
