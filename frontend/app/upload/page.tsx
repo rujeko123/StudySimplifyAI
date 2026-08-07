@@ -6,6 +6,7 @@ import { getSimpleExplanation } from "@/lib/explanations";
 
 export default function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
   const [flashcards, setFlashcards] = useState("");
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -53,6 +54,7 @@ const [answer, setAnswer] = useState("");
       alert("Please select a file first.");
       return;
     }
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -68,6 +70,7 @@ console.log(data);
 
 setResult(data.summary);
 setFlashcards(data.flashcards);
+setLoading(false);
 setWordCount(
   data.summary.split(/\s+/).filter(Boolean).length
 );
@@ -161,12 +164,13 @@ async function askTutor() {
           </div>
         )}
 
-        <button
-          onClick={handleSummarize}
-          className="w-full mt-8 bg-blue-600 text-white py-4 rounded-xl font-semibold hover:bg-blue-700 transition"
-        >
-          Summarize with AI
-        </button>
+  <button
+  onClick={handleSummarize}
+  disabled={loading}
+  className="w-full mt-8 bg-blue-600 text-white py-4 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {loading ? "⏳ Processing your notes..." : "🤖 Summarize with AI"}
+</button>      
 
         {result && (
           <div className="mt-8 bg-white border rounded-xl p-6 shadow">
