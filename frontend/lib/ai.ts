@@ -5,57 +5,49 @@ const openai = new OpenAI({
 });
 
 export async function generateAIStudyNotes(text: string) {
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a helpful study assistant. Convert lecture notes into simple student-friendly study notes.",
-        },
-        {
-          role: "user",
-          content: `
-Create study notes from this material:
+  if (!text || !text.trim()) {
+    throw new Error("No study material was provided.");
+  }
 
-${text}
+  const response = await openai.chat.completions.create({
+    model: "gpt-4.1-mini",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are a helpful study assistant. Create accurate, simple, student-friendly study notes using ONLY the material provided by the student. Do not introduce unrelated subjects or information.",
+      },
+      {
+        role: "user",
+        content: `Create study notes from the following lecture material.
+
+IMPORTANT:
+- Use ONLY information contained in the material.
+- Do not assume the subject is Zimbabwe Studies or ZSS.
+- Do not add unrelated information.
+- Identify the actual subject and concepts from the document.
+- Keep explanations simple and clear.
 
 Include:
-- Main ideas
-- Simple explanations
-- Important points
-- Practice questions
-`,
-        },
-      ],
-    });
 
-    return response.choices[0].message.content || "";
+1. Main Ideas
+2. Simple Explanations
+3. Important Points
+4. Practice Questions
 
-  } catch (error) {
-    console.log("AI unavailable");
+LECTURE MATERIAL:
 
-    throw error;
+${text}`,
+      },
+    ],
+  });
+
+  return response.choices[0]?.message?.content || "";
 }
 
-}
+
 export function explainTopic(question: string) {
+  return `Explain this concept using the student's uploaded study material:
 
-  const lower = question.toLowerCase();
-
-  if (lower.includes("critical consciousness")) {
-    return "Critical Consciousness means being able to think deeply about society, identify problems, and understand how people can create positive change.";
-  }
-
-  if (lower.includes("zss")) {
-    return "ZSS teaches students about Zimbabwe's history, culture, citizenship, national values and their responsibilities as citizens.";
-  }
-
-  if (lower.includes("civic education")) {
-    return "Civic Education teaches people about their rights, responsibilities, values and participation in society.";
-  }
-
-  return `This topic is explained as follows: ${question}. It is an important concept from your study notes.`;
+${question}`;
 }
-

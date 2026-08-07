@@ -208,26 +208,11 @@ async function askTutor() {
 </button>
 <div className="mt-6 flex flex-wrap gap-3">
 
-  <button
-    onClick={() => explainConcept("Purpose of ZSS")}
-    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-  >
-    💡 Purpose of ZSS
-  </button>
+  
 
-  <button
-    onClick={() => explainConcept("Major Aims of ZSS")}
-    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-  >
-    💡 Major Aims
-  </button>
+  
 
-  <button
-    onClick={() => explainConcept("Civic Education")}
-    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-  >
-    💡 Civic Education
-  </button>
+ 
 
 </div>
 {simpleExplanation && (
